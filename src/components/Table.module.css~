@@ -1,0 +1,48 @@
+.table {
+	border-collapse: collapse;
+    border: solid black;
+	margin: auto;
+}
+
+.filterbar {
+	margin-bottom: 9px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.filter {
+	background-color: #2b45b5;
+	color: white;
+}
+
+select {
+	appearance: none;
+
+	padding: 0.5em 0.5em;
+	background: red;
+	border: none;
+	border-radius: 0;
+}
+
+.btn {
+	width: 100%;
+	height: 100%;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	transition: 0.2s;
+}
+
+td, th {
+    border: thin solid black;
+}
+
+.btn, td {
+    padding: 5px 10px;
+}
+
+.btn:hover {
+	background-color: #2b45b5;
+	color: white;
+}

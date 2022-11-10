@@ -1,0 +1,77 @@
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import style from './Table.module.css'
+
+interface TableProp {
+    data: any[];
+}
+
+export default function Table(props: TableProp) {
+    const [data, setData] = useState<any[]>([]);
+    const [header, setHeader] = useState<string[]>([]);
+    const name = "Customer Name";
+
+    const onSort = (col: string) => {
+        const sheet = [...data];
+        sheet.sort((a: any, b: any) => {
+            if (a[col] > b[col]) return 1;
+            else return -1;
+        });
+        console.log("sorting with " + col);
+        console.log(sheet);
+        setData(sheet);
+    }
+
+    const onFilter = (word: string) => {
+        const result = props.data.filter(o => {
+            return (o[name] as string).search(word);
+        });
+        setData(result);
+    };
+
+    useEffect(() => {
+        setData(props.data);
+        setHeader(Object.keys(props.data[0]));
+    }, [props]);
+    console.log("rerendered");
+
+    return (
+        <div>
+            <div className={style.filterbar}>
+                <input className={style.filter} type="text" placeholder="search here" onChange={e => onFilter(e.target.value)}></input>
+                <select id="column">
+                    {
+                        header.map((col: string) => (
+                            <option value={col}>{col}</option>
+                        ))
+                    }
+                </select>
+            </div>
+            <table className={style.table}>
+                <thead>
+                    <tr>
+                        {
+                            header.map(key => (
+                                <th key={key}>
+                                    <button className={style.btn} onClick={() => onSort(key)}>{key}</button>
+                                </th>
+                            ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data.map((row: any) => (
+                            <tr key={row["id"]}>
+                                {
+                                    header.map(key => (
+                                        <td key={row[key]}>{row[key]}</td>
+                                    ))
+                                }
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    )
+}
